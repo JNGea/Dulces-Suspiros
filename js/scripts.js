@@ -2,7 +2,7 @@
 const productos = [];
 const carrito = [];
 let contenedorTarjeta = document.querySelector('.contenedorTarjeta');
-let btnAgregarCarrito = document.getElementsByClassName('agregarCarrito');
+let btnAgregarCarritoLista = document.getElementsByClassName('agregarCarrito');
 
 class Producto {
   constructor(nombre, precio, src, id) {
@@ -51,7 +51,7 @@ productos.forEach((producto) => {
       <!-- Product actions-->
       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
           <div class="text-center">
-            <button class="agregarCarrito btn btn-outline-dark mt-auto">
+            <button class="agregarCarrito btn btn-outline-dark mt-auto" id = ${producto.id}>
               Agregar al Carrito
             </button>
           </div>
@@ -62,14 +62,8 @@ productos.forEach((producto) => {
   contenedorTarjeta.appendChild(divProducto);
 });
 
-// crearTarjeta(productos);
 
-// const cargarCarrito = (prodId) => {
-//   let item = productos.find ((prodId) => prodId === id)
-
-//   carrito.push(item);
-//   console.log(carrito);
-// };
+const btnCarrito = [...btnAgregarCarritoLista];
 
 // btnAgregarCarrito.onclick = () => {
 //   carrito.push({
@@ -81,6 +75,23 @@ productos.forEach((producto) => {
 //   console.log(carrito);
 // };
 
-btnAgregarCarrito.onclick = () => {
-  console.log('Hiciste click')
-};
+// btnAgregarCarrito.onclick = () => {
+//   const cargarCarrito = (prodId) => {
+//     let item = productos.find((prodId) => prodId === Producto.id)
+
+//     carrito.push(item);
+//     console.log(carrito);
+//   }
+// };
+
+// btnAgregarCarrito.onclick = () => {
+//   console.log('click')
+// };
+
+console.log(btnAgregarCarritoLista);
+
+console.log(btnCarrito);
+
+btnCarrito.forEach(btnCarrito => {
+  btnCarrito.addEventListener('click', () => console.log('click'));
+});
