@@ -2,23 +2,24 @@
 const productos = [];
 const carrito = [];
 let contenedorTarjeta = document.querySelector('.contenedorTarjeta');
-let btnAgregarCarritoLista = document.getElementsByClassName('agregarCarrito');
+let contenedorCarrito = document.getElementById('contenedorCarrito');
 
 class Producto {
-  constructor(nombre, precio, src, id) {
+  constructor(nombre, precio, src, id, cantidad) {
     this.nombre = nombre;
     this.precio = precio;
     this.src = src;
     this.id = id;
+    this.cantidad = cantidad;
   }
 }
 
-productos.push(new Producto('Tiramisú', '$ 60.00', 'src="../assets/tiramisu.webp"', '1'));
-productos.push(new Producto('Tarta Coco y DDL', '$ 120.00', 'src="../assets/Coco-y-DDL.webp"', '2'));
-productos.push(new Producto('Cheesecake', '$ 100.00', 'src="./assets/Cheesecake.webp"', '3'));
-productos.push(new Producto('Tarta de Ricota', '$ 150.00', 'src="./assets/Tarta de Ricota.webp"', '4'));
-productos.push(new Producto('Budín Inglés', '$ 80.00', 'src="./assets/budin-inglés.webp"', '5'));
-productos.push(new Producto('Tarta Cabsha', '$ 140.00', 'src="./assets/tarta cabsha.webp"', '6'));
+productos.push(new Producto('Tiramisú', '$ 60.00', 'src="../assets/tiramisu.webp"', 1, 1));
+productos.push(new Producto('Tarta Coco y DDL', '$ 120.00', 'src="../assets/Coco-y-DDL.webp"', 2, 1));
+productos.push(new Producto('Cheesecake', '$ 100.00', 'src="./assets/Cheesecake.webp"', 3, 1));
+productos.push(new Producto('Tarta de Ricota', '$ 150.00', 'src="./assets/Tarta de Ricota.webp"', 4, 1));
+productos.push(new Producto('Budín Inglés', '$ 80.00', 'src="./assets/budin-inglés.webp"', 5, 1));
+productos.push(new Producto('Tarta Cabsha', '$ 140.00', 'src="./assets/tarta cabsha.webp"', 6, 1));
 
 
 //Función creadora de las tarjetas de productos
@@ -51,7 +52,7 @@ productos.forEach((producto) => {
       <!-- Product actions-->
       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
           <div class="text-center">
-            <button class="agregarCarrito btn btn-outline-dark mt-auto" id = ${producto.id}>
+            <button class="agregarCarrito btn btn-outline-dark mt-auto" id = "agregar${producto.id}">
               Agregar al Carrito
             </button>
           </div>
@@ -60,38 +61,52 @@ productos.forEach((producto) => {
   </div>`
 
   contenedorTarjeta.appendChild(divProducto);
+
+  let btnCarrito = document.getElementById(`agregar${producto.id}`);
+
+  btnCarrito.addEventListener('click',() => {
+    agregarCarrito(producto.id);
+  });
+
 });
 
+//Función para cargar el carrito
+const agregarCarrito = (prodId) => {
+  let item = productos.find((prod) => prod.id === prodId);
+  carrito.push(item);
+  actualizarCarrito();
+  console.log(carrito);
+};
 
-const btnCarrito = [...btnAgregarCarritoLista];
+const actualizarCarrito = () => {
+  contenedorCarrito.innerHTML = "";
 
-// btnAgregarCarrito.onclick = () => {
-//   carrito.push({
-//     nombre: producto.nombre,
-//     img: producto.src,
-//     precio: producto.precio,
-//     id: producto.id
-//   });
-//   console.log(carrito);
-// };
+  carrito.forEach((productos) => {
 
-// btnAgregarCarrito.onclick = () => {
-//   const cargarCarrito = (prodId) => {
-//     let item = productos.find((prodId) => prodId === Producto.id)
+    let divCarrito = document.createElement('div');
+    divCarrito.className = ('bi-cart-fill');
+    divCarrito.innerHTML = `
+    <p>${productos.nombre}</p>
+    <p>Precio: ${productos.precio}</p>
+    <p>Cantidad: <span id="cantidad">${productos.cantidad}</span></p>
+    <button onclick = "eliminarCarrito(${productos.id})" class=""btnEliminar><i class="fas fa-trash-alt"></button>`
 
-//     carrito.push(item);
+    contenedorCarrito.appendChild(divCarrito);
+  });
+}
+
+
+// let nodeCarritoLista = document.querySelectorAll('.agregarCarrito');
+
+
+// //Spread a la colección HTML del carrito
+// const btnCarrito = [...nodeCarritoLista];
+
+// btnCarrito.forEach(btnCarrito => {
+//   btnCarrito.addEventListener('click', () => {
+//     carrito.push(productos.Producto.nombre);
 //     console.log(carrito);
-//   }
-// };
+//   });
+// });
 
-// btnAgregarCarrito.onclick = () => {
-//   console.log('click')
-// };
-
-console.log(btnAgregarCarritoLista);
-
-console.log(btnCarrito);
-
-btnCarrito.forEach(btnCarrito => {
-  btnCarrito.addEventListener('click', () => console.log('click'));
-});
+// console.log(productos);
